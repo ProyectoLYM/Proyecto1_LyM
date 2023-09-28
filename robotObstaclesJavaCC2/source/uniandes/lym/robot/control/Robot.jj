@@ -87,7 +87,6 @@ TOKEN: /* Nombres de Comandos */
         |  < NOT:  "not" >
         | < VARIABLE : (["a" - "z", "A" - "Z"])+ >
 		| < INTEGER : (["0" - "9"])+ >
-		| < NEWLINE : "\n" >
 		| < PERIOD : "." >
 		| < RPAREN : ")" >
 		| < LPAREN : "(" >
@@ -95,6 +94,7 @@ TOKEN: /* Nombres de Comandos */
 		| < RSQUARE : "]" >
 		| < LSQUARE : "[" >
 		| < DOSPUNTOS : ":" >
+		| < COMA : "," >
         
 
 }
@@ -114,6 +114,20 @@ TOKEN :
 		|  	<#DIGIT: ["0"-"9"] >
         
 }
+
+
+void creacionVariable():
+{}
+{
+  < DEFVAR > < VARIABLE > < INTEGER >
+}
+
+void creacionProceso():
+{}
+{
+  <DEFPROC> <VARIABLE> <LPAREN> (<VARIABLE> (<COMA> <VARIABLE>))* <RPAREN>
+}
+  
 
 
 
