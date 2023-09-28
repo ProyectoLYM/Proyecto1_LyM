@@ -59,13 +59,43 @@ SKIP:
 TOKEN: /* Nombres de Comandos */
 {
 
-			<MOV:  "Mov">
+			<MOVE:  "Move">
 		| 	<RIGHT: "RIGHT">
 		| 	<PUT: "Put">
 		| 	<PICK: "Pick">
 		|  < POP: "Pop" >
 		|  <GO: "GO" >
-        |  < HOP:  "HOP" >		
+        |  < HOP:  "HOP" >
+        |  < JUMP:  "jump" >
+        |  < LEAP:  "leap" >
+        |  < TURN:  "turn" >
+        |  < TURNTO:  "turnto" >
+        |  < DROP:  "drop" >
+        |  < GET:  "get" >
+        |  < GRAB:  "grab" >
+        |  < LETGO:  "letGo" >
+        |  < NOP:  "nop" >
+        |  < DEFVAR:  "defVar" >
+        |  < DEFPROC:  "defProc" >
+        |  < IF:  "if" >
+        |  < ELSE:  "else" >
+        |  < WHILE:  "while" >
+        |  < REPEAT:  "repeat" >
+        |  < TIMES:  "times" >
+        |  < FACING:  "facing" >
+        |  < CAN:  "can" >
+        |  < NOT:  "not" >
+        | < VARIABLE : (["a" - "z", "A" - "Z"])+ >
+		| < INTEGER : (["0" - "9"])+ >
+		| < NEWLINE : "\n" >
+		| < PERIOD : "." >
+		| < RPAREN : ")" >
+		| < LPAREN : "(" >
+		| < QUOTE : "\"" >
+		| < RSQUARE : "]" >
+		| < LSQUARE : "[" >
+		| < DOSPUNTOS : ":" >
+        
 
 }
 
@@ -99,7 +129,7 @@ TOKEN :
 	{
 		(		  (
 		   <RIGHT> "(" ")" {world.turnRight();salida = "Command: Turnright";}
-		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
+		| 	<MOVE>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
 		| 	<HOP>  "(" x=num() ")" {world.moveForward(x,true);salida = "Command:Jumpforward ";}
 		| 	<GO>  "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:GO ";}  
 		|  <PUT> "("  put() ")"					  			
