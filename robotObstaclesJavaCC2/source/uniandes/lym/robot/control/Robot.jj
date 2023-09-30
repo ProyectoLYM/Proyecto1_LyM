@@ -56,37 +56,47 @@ SKIP:
 	| "\n"
 }
 
-TOKEN: /* Nombres de Comandos */
+TOKEN: // Nombres de Comandos 
 {
+		< MOV:  "Mov">
+		| < RIGHT: "RIGHT">
+		| < PUT: "Put">
+		| < PICK: "Pick">
+		| < POP: "Pop" >
+		| < GO: "GO" >
+        | < HOP:  "HOP" >
+        | < JUMP:  "jump" >
+        | < WALK: "walk" >
+        | < LEAP:  "leap" >
+        | < TURN:  "turn" >
+        | < TURNTO:  "turnto" >
+        | < DROP:  "drop" >
+        | < GET:  "get" >
+        | < GRAB:  "grab" >
+        | < LETGO:  "letGo" >
+        | < NOP:  "nop" >
+        | < DEFVAR:  "defVar" >
+        | < DEFPROC:  "defProc" >
+        | < IF:  "if" >
+        | < ELSE:  "else" >
+        | < WHILE:  "while" >
+        | < REPEAT:  "repeat" >
+        | < TIMES:  "times" >
+        | < FACING:  "facing" >
+        | < CAN:  "can" >
+        | < NOT:  "not" >
+        | < DIRECTION: "front" | "right" | "left" | "back" >
+        | < ORIENTATION: "north" | "south" | "east" | "west" >
+        
+}
 
-			<MOVE:  "Move">
-		| 	<RIGHT: "RIGHT">
-		| 	<PUT: "Put">
-		| 	<PICK: "Pick">
-		|  < POP: "Pop" >
-		|  <GO: "GO" >
-        |  < HOP:  "HOP" >
-        |  < JUMP:  "jump" >
-        |  < LEAP:  "leap" >
-        |  < TURN:  "turn" >
-        |  < TURNTO:  "turnto" >
-        |  < DROP:  "drop" >
-        |  < GET:  "get" >
-        |  < GRAB:  "grab" >
-        |  < LETGO:  "letGo" >
-        |  < NOP:  "nop" >
-        |  < DEFVAR:  "defVar" >
-        |  < DEFPROC:  "defProc" >
-        |  < IF:  "if" >
-        |  < ELSE:  "else" >
-        |  < WHILE:  "while" >
-        |  < REPEAT:  "repeat" >
-        |  < TIMES:  "times" >
-        |  < FACING:  "facing" >
-        |  < CAN:  "can" >
-        |  < NOT:  "not" >
-        | < VARIABLE : (["a" - "z", "A" - "Z"])+ >
-		| < INTEGER : (["0" - "9"])+ >
+
+TOKEN: // Area de Operadores
+{
+  		< VARIABLE : (["a" - "z", "A" - "Z"])+ >
+ 		| < VARIABLE_NAME: (["a"-"z", "A"-"Z"])+ (["a"-"z", "A"-"Z", "0"-"9"])* >
+  		| < INTEGER : (["0" - "9"])+ >
+  		| < CONDITION: (["a"-"z", "A"-"Z", "0"-"9", " "])+ >
 		| < PERIOD : "." >
 		| < RPAREN : ")" >
 		| < LPAREN : "(" >
@@ -95,11 +105,10 @@ TOKEN: /* Nombres de Comandos */
 		| < LSQUARE : "[" >
 		| < DOSPUNTOS : ":" >
 		| < COMA : "," >
-        
+}  		
+  
 
-}
-
-TOKEN:
+TOKEN: // Palabras del lenguaje
 {
 		<BALLOONS:  "BALLOONS" >
 		|	<CHIPS:     "CHIPS"  >	
@@ -116,18 +125,69 @@ TOKEN :
 }
 
 
+// Gramatica
+
+
 void creacionVariable():
 {}
 {
-  < DEFVAR > < VARIABLE > < INTEGER >
+  <DEFVAR> <VARIABLE_NAME> <INTEGER>
 }
 
 void creacionProceso():
 {}
 {
-  <DEFPROC> <VARIABLE> <LPAREN> (<VARIABLE> (<COMA> <VARIABLE>))* <RPAREN>
-  
+  <DEFPROC> <VARIABLE_NAME> <LPAREN> (<VARIABLE_NAME> (<COMA> <VARIABLE_NAME>))* <RPAREN>
 }
+
+void comandoJump():
+{}
+{
+  <JUMP> <LPAREN> <INTEGER> <INTEGER> <RPAREN>
+}
+
+void comandoWalk1():
+{}
+{
+  <WALK> <LPAREN> <INTEGER> <RPAREN> 
+}
+
+void comandoWalk2():
+{}
+{
+  <WALK> <LPAREN> <INTEGER> <COMA> <DIRECTION> <RPAREN>   
+}
+
+void comandoWalk3():
+{}
+{
+  <WALK> <LPAREN> <INTEGER> <COMA> <ORIENTATION> <RPAREN>   
+}
+
+void comandoLeap1():
+{}
+{
+  <LEAP> <LPAREN> <INTEGER> <RPAREN> 
+}
+
+void comandoLeap2():
+{}
+{
+  <LEAP> <LPAREN> <INTEGER> <COMA> <DIRECTION> <RPAREN>   
+}
+
+void comandoLeap3():
+{}
+{
+  <LEAP> <LPAREN> <INTEGER> <COMA> <ORIENTATION> <RPAREN>   
+}
+
+void condicionalIf():
+{}
+{
+  <IF>
+}
+
 
   
 
@@ -145,7 +205,7 @@ void creacionProceso():
 	{
 		(		  (
 		   <RIGHT> "(" ")" {world.turnRight();salida = "Command: Turnright";}
-		| 	<MOVE>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
+		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
 		| 	<HOP>  "(" x=num() ")" {world.moveForward(x,true);salida = "Command:Jumpforward ";}
 		| 	<GO>  "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:GO ";}  
 		|  <PUT> "("  put() ")"					  			

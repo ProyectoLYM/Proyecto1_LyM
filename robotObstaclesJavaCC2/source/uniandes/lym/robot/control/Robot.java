@@ -23,20 +23,23 @@ public class Robot implements RobotConstants {
 
         String salida=new String();
 
-  final public void creacionVariable() throws ParseException {
+// Gramatica
+  final public 
+
+void creacionVariable() throws ParseException {
     jj_consume_token(DEFVAR);
-    jj_consume_token(VARIABLE);
+    jj_consume_token(VARIABLE_NAME);
     jj_consume_token(INTEGER);
 }
 
   final public void creacionProceso() throws ParseException {
     jj_consume_token(DEFPROC);
-    jj_consume_token(VARIABLE);
+    jj_consume_token(VARIABLE_NAME);
     jj_consume_token(LPAREN);
     label_1:
     while (true) {
       switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-      case VARIABLE:{
+      case VARIABLE_NAME:{
         ;
         break;
         }
@@ -44,18 +47,80 @@ public class Robot implements RobotConstants {
         jj_la1[0] = jj_gen;
         break label_1;
       }
-      jj_consume_token(VARIABLE);
+      jj_consume_token(VARIABLE_NAME);
       jj_consume_token(COMA);
-      jj_consume_token(VARIABLE);
+      jj_consume_token(VARIABLE_NAME);
     }
     jj_consume_token(RPAREN);
+}
+
+  final public void comandoJump() throws ParseException {
+    jj_consume_token(JUMP);
+    jj_consume_token(LPAREN);
+    jj_consume_token(INTEGER);
+    jj_consume_token(INTEGER);
+    jj_consume_token(RPAREN);
+}
+
+  final public void comandoWalk1() throws ParseException {
+    jj_consume_token(WALK);
+    jj_consume_token(LPAREN);
+    jj_consume_token(INTEGER);
+    jj_consume_token(RPAREN);
+}
+
+  final public void comandoWalk2() throws ParseException {
+    jj_consume_token(WALK);
+    jj_consume_token(LPAREN);
+    jj_consume_token(INTEGER);
+    jj_consume_token(COMA);
+    jj_consume_token(DIRECTION);
+    jj_consume_token(RPAREN);
+}
+
+  final public void comandoWalk3() throws ParseException {
+    jj_consume_token(WALK);
+    jj_consume_token(LPAREN);
+    jj_consume_token(INTEGER);
+    jj_consume_token(COMA);
+    jj_consume_token(ORIENTATION);
+    jj_consume_token(RPAREN);
+}
+
+  final public void comandoLeap1() throws ParseException {
+    jj_consume_token(LEAP);
+    jj_consume_token(LPAREN);
+    jj_consume_token(INTEGER);
+    jj_consume_token(RPAREN);
+}
+
+  final public void comandoLeap2() throws ParseException {
+    jj_consume_token(LEAP);
+    jj_consume_token(LPAREN);
+    jj_consume_token(INTEGER);
+    jj_consume_token(COMA);
+    jj_consume_token(DIRECTION);
+    jj_consume_token(RPAREN);
+}
+
+  final public void comandoLeap3() throws ParseException {
+    jj_consume_token(LEAP);
+    jj_consume_token(LPAREN);
+    jj_consume_token(INTEGER);
+    jj_consume_token(COMA);
+    jj_consume_token(ORIENTATION);
+    jj_consume_token(RPAREN);
+}
+
+  final public void condicionalIf() throws ParseException {
+    jj_consume_token(IF);
 }
 
 //boolean command(uniandes.lym.robot.view.Console sistema) :
   final public         boolean command(Console sistema) throws ParseException {int x,y;
                 salida=new String();
     switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-    case MOVE:
+    case MOV:
     case RIGHT:
     case PUT:
     case PICK:
@@ -72,8 +137,8 @@ public class Robot implements RobotConstants {
 world.turnRight();salida = "Command: Turnright";
           break;
           }
-        case MOVE:{
-          jj_consume_token(MOVE);
+        case MOV:{
+          jj_consume_token(MOV);
           jj_consume_token(LPAREN);
           x = num();
           jj_consume_token(RPAREN);
@@ -125,7 +190,7 @@ world.popBalloons(x); salida = "Comando:  Pop";
           jj_consume_token(-1);
           throw new ParseException();
         }
-        jj_consume_token(45);
+        jj_consume_token(50);
 try {
                                  Thread.sleep(900);
                     } catch (InterruptedException e) {
@@ -135,7 +200,7 @@ try {
                         sistema.printOutput(salida);
                         {if ("" != null) return true;}
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
-        case MOVE:
+        case MOV:
         case RIGHT:
         case PUT:
         case PICK:
@@ -248,10 +313,10 @@ try
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x80000000,0xfe0,0xfe0,0xfe1,0x0,0x0,};
+	   jj_la1_0 = new int[] {0x0,0xfe0,0xfe0,0xfe1,0x0,0x0,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0x0,0x0,0x0,0x0,0x600,0x600,};
+	   jj_la1_1 = new int[] {0x8,0x0,0x0,0x0,0xc000,0xc000,};
 	}
 
   /** Constructor with InputStream. */
@@ -376,7 +441,7 @@ try
   /** Generate ParseException. */
   public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[46];
+	 boolean[] la1tokens = new boolean[51];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -393,7 +458,7 @@ try
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 46; i++) {
+	 for (int i = 0; i < 51; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;
