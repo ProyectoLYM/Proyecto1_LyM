@@ -126,7 +126,9 @@ void creacionProceso():
 {}
 {
   <DEFPROC> <VARIABLE> <LPAREN> (<VARIABLE> (<COMA> <VARIABLE>))* <RPAREN>
+  
 }
+
   
 
 
