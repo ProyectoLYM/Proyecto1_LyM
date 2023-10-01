@@ -461,7 +461,9 @@ void creacionVariable() throws ParseException {
     case PICK:
     case POP:
     case GO:
-    case HOP:{
+    case HOP:
+    case JUMP:
+    case LETGO:{
       label_3:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
@@ -520,6 +522,24 @@ world.setPostion(x,y);salida = "Command:GO ";
 world.popBalloons(x); salida = "Comando:  Pop";
           break;
           }
+        case JUMP:{
+          jj_consume_token(JUMP);
+          jj_consume_token(LPAREN);
+          x = num();
+          jj_consume_token(COMA);
+          y = num();
+          jj_consume_token(RPAREN);
+world.setPostion(x,y);salida = "Command:JUMP ";
+          break;
+          }
+        case LETGO:{
+          jj_consume_token(LETGO);
+          jj_consume_token(LPAREN);
+          x = num();
+          jj_consume_token(RPAREN);
+world.putBalloons(x); salida = "Command: LetGo";
+          break;
+          }
         default:
           jj_la1[10] = jj_gen;
           jj_consume_token(-1);
@@ -541,7 +561,9 @@ try {
         case PICK:
         case POP:
         case GO:
-        case HOP:{
+        case HOP:
+        case JUMP:
+        case LETGO:{
           ;
           break;
           }
@@ -648,7 +670,7 @@ try
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3ff000,0x5ffffe0,0x5ffffe0,0xfe0,0xfe0,0xfe1,0x0,0x0,};
+	   jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x3ff000,0x5ffffe0,0x5ffffe0,0x101fe0,0x101fe0,0x101fe1,0x0,0x0,};
 	}
 	private static void jj_la1_init_1() {
 	   jj_la1_1 = new int[] {0x40,0x30,0x30,0x3,0x8000,0x3,0x8000,0x0,0x0,0x0,0x0,0x0,0x0,0x30,0x30,};

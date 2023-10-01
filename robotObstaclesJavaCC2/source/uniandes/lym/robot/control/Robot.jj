@@ -105,7 +105,7 @@ TOKEN: // Area de Operadores
 {
   		
  		< VARIABLE_NAME: (["a"-"z", "A"-"Z"])+ (["a"-"z", "A"-"Z", "0"-"9"])* >
-  		| < CONDITION: (["a"-"z", "A"-"Z", "0"-"9", " "])+ >
+  		| < CONDITION: (["a"-"z", "A"-"Z"])+ (["a"-"z", "A"-"Z", "0"-"9", " "])* >
 		| < PERIOD : "." >
 		| < RPAREN : ")" >
 		| < LPAREN : "(" >
@@ -316,6 +316,8 @@ void Programa():
 		|  <PUT> "("  put() ")"					  			
 		|  <PICK> "(" get()  ")"	
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
+	    |  <JUMP> "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:JUMP ";}
+	    |  <LETGO> "(" x=num() ")" {world.putBalloons(x); salida = "Command: LetGo";}
 		) ";" 
 
 		{
