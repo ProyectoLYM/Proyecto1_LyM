@@ -87,6 +87,7 @@ TOKEN: // Nombres de Comandos
         | < NOT:  "not" >
         | < DIRECTION: "front" | "right" | "left" | "back" >
         | < ORIENTATION: "north" | "south" | "east" | "west" >
+        | < CONDITIONAL : "facing"| "can" | "not" >
         
 }
 
@@ -105,6 +106,8 @@ TOKEN: // Area de Operadores
 		| < LSQUARE : "[" >
 		| < DOSPUNTOS : ":" >
 		| < COMA : "," >
+		| < RCURLY : "}" >
+        | < LCURLY : "{" >
 }  		
   
 
@@ -182,10 +185,16 @@ void comandoLeap3():
   <LEAP> <LPAREN> <INTEGER> <COMA> <ORIENTATION> <RPAREN>   
 }
 
-void condicionalIf():
+void condicionales():
 {}
 {
-  <IF>
+  <IF> <CONDITION> <LPAREN> <FUNCTION> <RPAREN> <LCURLY> <FUNCTION> <RCURLY> <ELSE> <LPAREN> <FUNCTION> <RPAREN> <LCURLY> <FUNCTION> <RCURLY> 
+}
+
+void while() :
+{}
+{
+  <WHILE> <CONDITION> <LPAREN> <FUNCTION> <RPAREN> <LCURLY> <FUNCTION> <RCURLY>
 }
 
 

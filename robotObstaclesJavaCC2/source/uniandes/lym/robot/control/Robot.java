@@ -112,8 +112,22 @@ void creacionVariable() throws ParseException {
     jj_consume_token(RPAREN);
 }
 
-  final public void condicionalIf() throws ParseException {
+  final public void condicionales() throws ParseException {
     jj_consume_token(IF);
+    jj_consume_token(CONDITION);
+    jj_consume_token(LPAREN);
+    jj_consume_token(FUNCTION);
+    jj_consume_token(RPAREN);
+    jj_consume_token(LCURLY);
+    jj_consume_token(FUNCTION);
+    jj_consume_token(RCURLY);
+    jj_consume_token(ELSE);
+    jj_consume_token(LPAREN);
+    jj_consume_token(FUNCTION);
+    jj_consume_token(RPAREN);
+    jj_consume_token(LCURLY);
+    jj_consume_token(FUNCTION);
+    jj_consume_token(RCURLY);
 }
 
 //boolean command(uniandes.lym.robot.view.Console sistema) :
@@ -190,7 +204,7 @@ world.popBalloons(x); salida = "Comando:  Pop";
           jj_consume_token(-1);
           throw new ParseException();
         }
-        jj_consume_token(50);
+        jj_consume_token(54);
 try {
                                  Thread.sleep(900);
                     } catch (InterruptedException e) {
@@ -316,7 +330,7 @@ try
 	   jj_la1_0 = new int[] {0x0,0xfe0,0xfe0,0xfe1,0x0,0x0,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0x8,0x0,0x0,0x0,0xc000,0xc000,};
+	   jj_la1_1 = new int[] {0x10,0x0,0x0,0x0,0xc0000,0xc0000,};
 	}
 
   /** Constructor with InputStream. */
@@ -441,7 +455,7 @@ try
   /** Generate ParseException. */
   public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[51];
+	 boolean[] la1tokens = new boolean[55];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -458,7 +472,7 @@ try
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 51; i++) {
+	 for (int i = 0; i < 55; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;
