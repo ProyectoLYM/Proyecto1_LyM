@@ -88,6 +88,7 @@ TOKEN: // Nombres de Comandos
         | < DIRECTION: "front" | "right" | "left" | "back" >
         | < ORIENTATION: "north" | "south" | "east" | "west" >
         | < CONDITIONAL : "facing"| "can" | "not" >
+        | < DIRECTION_TURN : "left"| "right" | "around" >
         
 }
 
@@ -149,59 +150,105 @@ void comandoJump():
   <JUMP> <LPAREN> <INTEGER> <INTEGER> <RPAREN>
 }
 
-void comandoWalk1():
+void comandoWalk():
 {}
 {
-  <WALK> <LPAREN> <INTEGER> <RPAREN> 
+  <WALK> <LPAREN> <INTEGER> (<COMA> (<DIRECTION> | <ORIENTATION>))? <RPAREN>
 }
 
-void comandoWalk2():
+void comandoLeap():
 {}
 {
-  <WALK> <LPAREN> <INTEGER> <COMA> <DIRECTION> <RPAREN>   
+  <LEAP> <LPAREN> <INTEGER> (<COMA> (<DIRECTION> | <ORIENTATION>))? <RPAREN>
 }
-
-void comandoWalk3():
+  
+void comandoTurn():
 {}
 {
-  <WALK> <LPAREN> <INTEGER> <COMA> <ORIENTATION> <RPAREN>   
+  <TURN> <LPAREN> <DIRECTION_TURN> <RPAREN>
 }
 
-void comandoLeap1():
+void comandoTurnTo():
 {}
 {
-  <LEAP> <LPAREN> <INTEGER> <RPAREN> 
+  <TURNTO> <LPAREN> <ORIENTATION> <RPAREN>
 }
 
-void comandoLeap2():
+void comandoDrop():
 {}
 {
-  <LEAP> <LPAREN> <INTEGER> <COMA> <DIRECTION> <RPAREN>   
+  <DROP> <LPAREN> <INTEGER> <RPAREN>
 }
 
-void comandoLeap3():
+void comandoGet():
 {}
 {
-  <LEAP> <LPAREN> <INTEGER> <COMA> <ORIENTATION> <RPAREN>   
+  <GET> <LPAREN> <INTEGER> <RPAREN>
 }
 
-void condicionales():
+void comandoGrab():
 {}
 {
-  <IF> <CONDITION> <LPAREN> <FUNCTION> <RPAREN> <LCURLY> <FUNCTION> <RCURLY> <ELSE> <LPAREN> <FUNCTION> <RPAREN> <LCURLY> <FUNCTION> <RCURLY> 
+  <GRAB> <LPAREN> <INTEGER> <RPAREN>
 }
 
-void while() :
+void comandoLetGo():
 {}
 {
-  <WHILE> <CONDITION> <LPAREN> <FUNCTION> <RPAREN> <LCURLY> <FUNCTION> <RCURLY>
+  <LETGO> <LPAREN> <INTEGER> <RPAREN>
 }
 
+void comandoNop():
+{}
+{
+  <NOP> 
+}
+
+void condicionalIf():
+{}
+{
+  <IF> <CONDITION> <LPAREN> argumentList() <RPAREN> <LCURLY> argumentList() <RCURLY>
+}
+
+void condicionalWhile():
+{}
+{
+  <WHILE> <CONDITION> <LPAREN> argumentList() <RPAREN> <LCURLY> argumentList() <RCURLY>
+}
+
+void argumentList():
+{}
+{
+    comandoLeap()| comandoWalk() | comandoJump() | comandoTurn() | comandoTurnTo() | comandoDrop() | comandoGet() | comandoGrab() | comandoLetGo() |comandoNop() 
+}
+
+
+void reglasdeSintaxis():
+{}
+{
+  creacionVariable() |
+  creacionProceso() |
+  comandoJump() |
+  comandoTurn() |
+  comandoTurnTo() |
+  comandoDrop() |
+  comandoGet() |
+  comandoGrab() |
+  comandoLetGo() |
+  comandoNop() |
+  condicionalIf() |
+  condicionalWhile() |
+  comandoLeap() |
+  comandoWalk()
+}
+
+void Programa():
+{}
+{
+  (    reglasdeSintaxis())*< EOF >
+}
 
   
-
-
-
 	//boolean command(uniandes.lym.robot.view.Console sistema) :
 	boolean command(Console sistema):
 	{	

@@ -62,72 +62,276 @@ void creacionVariable() throws ParseException {
     jj_consume_token(RPAREN);
 }
 
-  final public void comandoWalk1() throws ParseException {
+  final public void comandoWalk() throws ParseException {
     jj_consume_token(WALK);
     jj_consume_token(LPAREN);
     jj_consume_token(INTEGER);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case COMA:{
+      jj_consume_token(COMA);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case DIRECTION:{
+        jj_consume_token(DIRECTION);
+        break;
+        }
+      case ORIENTATION:{
+        jj_consume_token(ORIENTATION);
+        break;
+        }
+      default:
+        jj_la1[1] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      break;
+      }
+    default:
+      jj_la1[2] = jj_gen;
+      ;
+    }
     jj_consume_token(RPAREN);
 }
 
-  final public void comandoWalk2() throws ParseException {
-    jj_consume_token(WALK);
+  final public void comandoLeap() throws ParseException {
+    jj_consume_token(LEAP);
     jj_consume_token(LPAREN);
     jj_consume_token(INTEGER);
-    jj_consume_token(COMA);
-    jj_consume_token(DIRECTION);
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case COMA:{
+      jj_consume_token(COMA);
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case DIRECTION:{
+        jj_consume_token(DIRECTION);
+        break;
+        }
+      case ORIENTATION:{
+        jj_consume_token(ORIENTATION);
+        break;
+        }
+      default:
+        jj_la1[3] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
+      break;
+      }
+    default:
+      jj_la1[4] = jj_gen;
+      ;
+    }
     jj_consume_token(RPAREN);
 }
 
-  final public void comandoWalk3() throws ParseException {
-    jj_consume_token(WALK);
+  final public void comandoTurn() throws ParseException {
+    jj_consume_token(TURN);
     jj_consume_token(LPAREN);
-    jj_consume_token(INTEGER);
-    jj_consume_token(COMA);
+    jj_consume_token(DIRECTION_TURN);
+    jj_consume_token(RPAREN);
+}
+
+  final public void comandoTurnTo() throws ParseException {
+    jj_consume_token(TURNTO);
+    jj_consume_token(LPAREN);
     jj_consume_token(ORIENTATION);
     jj_consume_token(RPAREN);
 }
 
-  final public void comandoLeap1() throws ParseException {
-    jj_consume_token(LEAP);
+  final public void comandoDrop() throws ParseException {
+    jj_consume_token(DROP);
     jj_consume_token(LPAREN);
     jj_consume_token(INTEGER);
     jj_consume_token(RPAREN);
 }
 
-  final public void comandoLeap2() throws ParseException {
-    jj_consume_token(LEAP);
+  final public void comandoGet() throws ParseException {
+    jj_consume_token(GET);
     jj_consume_token(LPAREN);
     jj_consume_token(INTEGER);
-    jj_consume_token(COMA);
-    jj_consume_token(DIRECTION);
     jj_consume_token(RPAREN);
 }
 
-  final public void comandoLeap3() throws ParseException {
-    jj_consume_token(LEAP);
+  final public void comandoGrab() throws ParseException {
+    jj_consume_token(GRAB);
     jj_consume_token(LPAREN);
     jj_consume_token(INTEGER);
-    jj_consume_token(COMA);
-    jj_consume_token(ORIENTATION);
     jj_consume_token(RPAREN);
 }
 
-  final public void condicionales() throws ParseException {
+  final public void comandoLetGo() throws ParseException {
+    jj_consume_token(LETGO);
+    jj_consume_token(LPAREN);
+    jj_consume_token(INTEGER);
+    jj_consume_token(RPAREN);
+}
+
+  final public void comandoNop() throws ParseException {
+    jj_consume_token(NOP);
+}
+
+  final public void condicionalIf() throws ParseException {
     jj_consume_token(IF);
     jj_consume_token(CONDITION);
     jj_consume_token(LPAREN);
-    jj_consume_token(FUNCTION);
+    argumentList();
     jj_consume_token(RPAREN);
     jj_consume_token(LCURLY);
-    jj_consume_token(FUNCTION);
+    argumentList();
     jj_consume_token(RCURLY);
-    jj_consume_token(ELSE);
+}
+
+  final public void condicionalWhile() throws ParseException {
+    jj_consume_token(WHILE);
+    jj_consume_token(CONDITION);
     jj_consume_token(LPAREN);
-    jj_consume_token(FUNCTION);
+    argumentList();
     jj_consume_token(RPAREN);
     jj_consume_token(LCURLY);
-    jj_consume_token(FUNCTION);
+    argumentList();
     jj_consume_token(RCURLY);
+}
+
+  final public void argumentList() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case LEAP:{
+      comandoLeap();
+      break;
+      }
+    case WALK:{
+      comandoWalk();
+      break;
+      }
+    case JUMP:{
+      comandoJump();
+      break;
+      }
+    case TURN:{
+      comandoTurn();
+      break;
+      }
+    case TURNTO:{
+      comandoTurnTo();
+      break;
+      }
+    case DROP:{
+      comandoDrop();
+      break;
+      }
+    case GET:{
+      comandoGet();
+      break;
+      }
+    case GRAB:{
+      comandoGrab();
+      break;
+      }
+    case LETGO:{
+      comandoLetGo();
+      break;
+      }
+    case NOP:{
+      comandoNop();
+      break;
+      }
+    default:
+      jj_la1[5] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+}
+
+  final public void reglasdeSintaxis() throws ParseException {
+    switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+    case DEFVAR:{
+      creacionVariable();
+      break;
+      }
+    case DEFPROC:{
+      creacionProceso();
+      break;
+      }
+    case JUMP:{
+      comandoJump();
+      break;
+      }
+    case TURN:{
+      comandoTurn();
+      break;
+      }
+    case TURNTO:{
+      comandoTurnTo();
+      break;
+      }
+    case DROP:{
+      comandoDrop();
+      break;
+      }
+    case GET:{
+      comandoGet();
+      break;
+      }
+    case GRAB:{
+      comandoGrab();
+      break;
+      }
+    case LETGO:{
+      comandoLetGo();
+      break;
+      }
+    case NOP:{
+      comandoNop();
+      break;
+      }
+    case IF:{
+      condicionalIf();
+      break;
+      }
+    case WHILE:{
+      condicionalWhile();
+      break;
+      }
+    case LEAP:{
+      comandoLeap();
+      break;
+      }
+    case WALK:{
+      comandoWalk();
+      break;
+      }
+    default:
+      jj_la1[6] = jj_gen;
+      jj_consume_token(-1);
+      throw new ParseException();
+    }
+}
+
+  final public void Programa() throws ParseException {
+    label_2:
+    while (true) {
+      switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
+      case JUMP:
+      case WALK:
+      case LEAP:
+      case TURN:
+      case TURNTO:
+      case DROP:
+      case GET:
+      case GRAB:
+      case LETGO:
+      case NOP:
+      case DEFVAR:
+      case DEFPROC:
+      case IF:
+      case WHILE:{
+        ;
+        break;
+        }
+      default:
+        jj_la1[7] = jj_gen;
+        break label_2;
+      }
+      reglasdeSintaxis();
+    }
+    jj_consume_token(0);
 }
 
 //boolean command(uniandes.lym.robot.view.Console sistema) :
@@ -141,7 +345,7 @@ void creacionVariable() throws ParseException {
     case POP:
     case GO:
     case HOP:{
-      label_2:
+      label_3:
       while (true) {
         switch ((jj_ntk==-1)?jj_ntk_f():jj_ntk) {
         case RIGHT:{
@@ -200,7 +404,7 @@ world.popBalloons(x); salida = "Comando:  Pop";
           break;
           }
         default:
-          jj_la1[1] = jj_gen;
+          jj_la1[8] = jj_gen;
           jj_consume_token(-1);
           throw new ParseException();
         }
@@ -225,8 +429,8 @@ try {
           break;
           }
         default:
-          jj_la1[2] = jj_gen;
-          break label_2;
+          jj_la1[9] = jj_gen;
+          break label_3;
         }
       }
       break;
@@ -237,7 +441,7 @@ try {
       break;
       }
     default:
-      jj_la1[3] = jj_gen;
+      jj_la1[10] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -261,7 +465,7 @@ world.putBalloons(f); salida = "Command:  Put Balloons";
       break;
       }
     default:
-      jj_la1[4] = jj_gen;
+      jj_la1[11] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -284,7 +488,7 @@ world.grabBalloons(f);salida="Command:  Pick balloons";
       break;
       }
     default:
-      jj_la1[5] = jj_gen;
+      jj_la1[12] = jj_gen;
       jj_consume_token(-1);
       throw new ParseException();
     }
@@ -319,7 +523,7 @@ try
   public Token jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[6];
+  final private int[] jj_la1 = new int[13];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static {
@@ -327,10 +531,10 @@ try
 	   jj_la1_init_1();
 	}
 	private static void jj_la1_init_0() {
-	   jj_la1_0 = new int[] {0x0,0xfe0,0xfe0,0xfe1,0x0,0x0,};
+	   jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,0x0,0x3ff000,0x5fff000,0x5fff000,0xfe0,0xfe0,0xfe1,0x0,0x0,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0x10,0x0,0x0,0x0,0xc0000,0xc0000,};
+	   jj_la1_1 = new int[] {0x20,0x3,0x8000,0x3,0x8000,0x0,0x0,0x0,0x0,0x0,0x0,0xc0000,0xc0000,};
 	}
 
   /** Constructor with InputStream. */
@@ -344,7 +548,7 @@ try
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 13; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -358,7 +562,7 @@ try
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 13; i++) jj_la1[i] = -1;
   }
 
   /** Constructor. */
@@ -368,7 +572,7 @@ try
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 13; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -386,7 +590,7 @@ try
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 13; i++) jj_la1[i] = -1;
   }
 
   /** Constructor with generated Token Manager. */
@@ -395,7 +599,7 @@ try
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 13; i++) jj_la1[i] = -1;
   }
 
   /** Reinitialise. */
@@ -404,7 +608,7 @@ try
 	 token = new Token();
 	 jj_ntk = -1;
 	 jj_gen = 0;
-	 for (int i = 0; i < 6; i++) jj_la1[i] = -1;
+	 for (int i = 0; i < 13; i++) jj_la1[i] = -1;
   }
 
   private Token jj_consume_token(int kind) throws ParseException {
@@ -460,7 +664,7 @@ try
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
 	 }
-	 for (int i = 0; i < 6; i++) {
+	 for (int i = 0; i < 13; i++) {
 	   if (jj_la1[i] == jj_gen) {
 		 for (int j = 0; j < 32; j++) {
 		   if ((jj_la1_0[i] & (1<<j)) != 0) {

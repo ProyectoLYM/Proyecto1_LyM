@@ -71,15 +71,15 @@ public interface RobotConstants {
   /** RegularExpression Id. */
   int CONDITIONAL = 34;
   /** RegularExpression Id. */
-  int VARIABLE = 35;
+  int DIRECTION_TURN = 35;
   /** RegularExpression Id. */
-  int VARIABLE_NAME = 36;
+  int VARIABLE = 36;
   /** RegularExpression Id. */
-  int INTEGER = 37;
+  int VARIABLE_NAME = 37;
   /** RegularExpression Id. */
-  int CONDITION = 38;
+  int INTEGER = 38;
   /** RegularExpression Id. */
-  int FUNCTION = 39;
+  int CONDITION = 39;
   /** RegularExpression Id. */
   int PERIOD = 40;
   /** RegularExpression Id. */
@@ -149,11 +149,11 @@ public interface RobotConstants {
     "<DIRECTION>",
     "<ORIENTATION>",
     "<CONDITIONAL>",
+    "<DIRECTION_TURN>",
     "<VARIABLE>",
     "<VARIABLE_NAME>",
     "<INTEGER>",
     "<CONDITION>",
-    "<FUNCTION>",
     "\".\"",
     "\")\"",
     "\"(\"",
