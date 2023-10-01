@@ -105,7 +105,6 @@ TOKEN: // Area de Operadores
 {
   		
  		< VARIABLE_NAME: (["a"-"z", "A"-"Z"])+ (["a"-"z", "A"-"Z", "0"-"9"])* >
-  		| < INTEGER : (["0" - "9"])+ >
   		| < CONDITION: (["a"-"z", "A"-"Z", "0"-"9", " "])+ >
 		| < PERIOD : "." >
 		| < RPAREN : ")" >
@@ -134,7 +133,7 @@ TOKEN :
 void creacionVariable():
 {}
 {
-  <DEFVAR> <VARIABLE_NAME> <INTEGER>
+  <DEFVAR> <VARIABLE_NAME> <NUM>
 }
 
 void creacionProceso():
@@ -146,19 +145,63 @@ void creacionProceso():
 void comandoJump():
 {}
 {
-  <JUMP> <LPAREN> <INTEGER> <INTEGER> <RPAREN>
+  <JUMP> <LPAREN> <NUM> <NUM> <RPAREN>
+}
+
+void comandoMove():
+{}
+{
+  <MOV> <LPAREN> <NUM> <RPAREN>
+}
+
+void comandoRight():
+{}
+{
+  <RIGHT> <LPAREN> <RPAREN>
+}
+
+void comandoPut():
+{}
+{
+  <PUT> <LPAREN> (<CHIPS> | <BALLOONS>) <COMA> <NUM> <RPAREN>
+}
+
+void pop():
+{}
+{
+  <POP> <LPAREN> <NUM> <RPAREN>
+}
+
+void hop():
+{}
+{
+  <HOP> <LPAREN> <NUM> <RPAREN>
+}
+
+
+void go():
+{}
+{
+<GO> <LPAREN> <NUM> <COMA> <NUM> <RPAREN>
+}
+
+
+void pick():
+{}
+{
+  <PICK> <LPAREN> (<CHIPS> | <BALLOONS>)<COMA> <NUM> <RPAREN> 
 }
 
 void comandoWalk():
 {}
 {
-  <WALK> <LPAREN> <INTEGER> (<COMA> (<DIRECTION> | <ORIENTATION>))? <RPAREN>
+  <WALK> <LPAREN> <NUM> (<COMA> (<DIRECTION> | <ORIENTATION>))? <RPAREN>
 }
 
 void comandoLeap():
 {}
 {
-  <LEAP> <LPAREN> <INTEGER> (<COMA> (<DIRECTION> | <ORIENTATION>))? <RPAREN>
+  <LEAP> <LPAREN> <NUM> (<COMA> (<DIRECTION> | <ORIENTATION>))? <RPAREN>
 }
   
 void comandoTurn():
@@ -176,31 +219,31 @@ void comandoTurnTo():
 void comandoDrop():
 {}
 {
-  <DROP> <LPAREN> <INTEGER> <RPAREN>
+  <DROP> <LPAREN> <NUM> <RPAREN>
 }
 
 void comandoGet():
 {}
 {
-  <GET> <LPAREN> <INTEGER> <RPAREN>
+  <GET> <LPAREN> <NUM> <RPAREN>
 }
 
 void comandoGrab():
 {}
 {
-  <GRAB> <LPAREN> <INTEGER> <RPAREN>
+  <GRAB> <LPAREN> <NUM> <RPAREN>
 }
 
 void comandoLetGo():
 {}
 {
-  <LETGO> <LPAREN> <INTEGER> <RPAREN>
+  <LETGO> <LPAREN> <NUM> <RPAREN>
 }
 
 void comandoNop():
 {}
 {
-  <NOP> 
+  <NOP> <LPAREN> <RPAREN> 
 }
 
 void condicionalIf():
@@ -238,7 +281,14 @@ void reglasdeSintaxis():
   condicionalIf() |
   condicionalWhile() |
   comandoLeap() |
-  comandoWalk()
+  comandoWalk() |
+  comandoMove() |
+  comandoRight() |
+  comandoPut() |
+  pop() |
+  hop() |
+  go() |
+  pick()
 }
 
 void Programa():
