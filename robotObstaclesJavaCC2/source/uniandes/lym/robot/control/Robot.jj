@@ -93,10 +93,18 @@ TOKEN: // Nombres de Comandos
 }
 
 
+TOKEN: // Palabras del lenguaje
+{
+		<BALLOONS:  "BALLOONS" >
+		|	<CHIPS:     "CHIPS"  >	
+
+}
+
+
 TOKEN: // Area de Operadores
 {
-  		< VARIABLE : (["a" - "z", "A" - "Z"])+ >
- 		| < VARIABLE_NAME: (["a"-"z", "A"-"Z"])+ (["a"-"z", "A"-"Z", "0"-"9"])* >
+  		
+ 		< VARIABLE_NAME: (["a"-"z", "A"-"Z"])+ (["a"-"z", "A"-"Z", "0"-"9"])* >
   		| < INTEGER : (["0" - "9"])+ >
   		| < CONDITION: (["a"-"z", "A"-"Z", "0"-"9", " "])+ >
 		| < PERIOD : "." >
@@ -111,15 +119,6 @@ TOKEN: // Area de Operadores
         | < LCURLY : "{" >
 }  		
   
-
-TOKEN: // Palabras del lenguaje
-{
-		<BALLOONS:  "BALLOONS" >
-		|	<CHIPS:     "CHIPS"  >	
-
-}
-
-
 
 TOKEN :
 {

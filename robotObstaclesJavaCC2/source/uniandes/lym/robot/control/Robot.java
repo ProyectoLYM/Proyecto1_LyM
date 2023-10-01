@@ -408,7 +408,7 @@ world.popBalloons(x); salida = "Comando:  Pop";
           jj_consume_token(-1);
           throw new ParseException();
         }
-        jj_consume_token(54);
+        jj_consume_token(53);
 try {
                                  Thread.sleep(900);
                     } catch (InterruptedException e) {
@@ -534,7 +534,7 @@ try
 	   jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,0x0,0x3ff000,0x5fff000,0x5fff000,0xfe0,0xfe0,0xfe1,0x0,0x0,};
 	}
 	private static void jj_la1_init_1() {
-	   jj_la1_1 = new int[] {0x20,0x3,0x8000,0x3,0x8000,0x0,0x0,0x0,0x0,0x0,0x0,0xc0000,0xc0000,};
+	   jj_la1_1 = new int[] {0x40,0x3,0x10000,0x3,0x10000,0x0,0x0,0x0,0x0,0x0,0x0,0x30,0x30,};
 	}
 
   /** Constructor with InputStream. */
@@ -659,7 +659,7 @@ try
   /** Generate ParseException. */
   public ParseException generateParseException() {
 	 jj_expentries.clear();
-	 boolean[] la1tokens = new boolean[55];
+	 boolean[] la1tokens = new boolean[54];
 	 if (jj_kind >= 0) {
 	   la1tokens[jj_kind] = true;
 	   jj_kind = -1;
@@ -676,7 +676,7 @@ try
 		 }
 	   }
 	 }
-	 for (int i = 0; i < 55; i++) {
+	 for (int i = 0; i < 54; i++) {
 	   if (la1tokens[i]) {
 		 jj_expentry = new int[1];
 		 jj_expentry[0] = i;
