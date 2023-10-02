@@ -13,7 +13,7 @@ Modificado por Silvia Takahashi
 options 
 {
   
-	LOOKAHEAD=1; 
+	LOOKAHEAD=2; 
 	IGNORE_CASE=true;
 	STATIC = false;
 	
@@ -323,9 +323,10 @@ void Programa():
         | <GET> "(" x=num() ")" {world.pickChips(x); salida = "Command: Get"; }
         | <GRAB> "(" x=num() ")" {world.grabBalloons(x); salida = "Command: Grab"; }
 	    |  <TURNTO> "(" v=orientation() ")" {world.turnto(v); salida = "Command: Turnto";}
-	    | <WALK> "(" x=num()[")" {world.moveForward(x, true);salida = "Command: Walk";}]
-	    ["," v=orientation() ")" { world.turnto(v);world.moveForward(x, true);salida = "Command: Walk";}
-	    | v=direction()")" { world.turn(v); world.moveForward(x, true);salida = "Command: Walk"; }]
+	    | <WALK> "(" x=num()[")" {world.moveForward(x, false);salida = "Command: Walk";}]
+	    ["," v=orientation() ")" { world.turnto(v);world.moveForward(x, false);salida = "Command: Walk";}
+	    | 
+	    "," v=direction()")" { world.turn(v); world.moveForward(x, false);salida = "Command: Walk"; }]
 		) ";"
 	 
 		{
