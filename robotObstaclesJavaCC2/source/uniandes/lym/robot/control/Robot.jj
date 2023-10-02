@@ -85,10 +85,9 @@ TOKEN: // Nombres de Comandos
         | < FACING:  "facing" >
         | < CAN:  "can" >
         | < NOT:  "not" >
-        | < DIRECTION: "front" | "right" | "left" | "back" >
+        | < DIRECTION: "front" | "right" | "left" | "back" | "around" >
         | < ORIENTATION: "north" | "south" | "east" | "west" >
         | < CONDITIONAL : "facing"| "can" | "not" >
-        | < DIRECTION_TURN : "left"| "right" | "around" >
         
 }
 
@@ -207,7 +206,7 @@ void comandoLeap():
 void comandoTurn():
 {}
 {
-  <TURN> <LPAREN> <DIRECTION_TURN> <RPAREN>
+  <TURN> <LPAREN> <DIRECTION> <RPAREN>
 }
 
 void comandoTurnTo():
@@ -303,6 +302,7 @@ void Programa():
 	{	
 		
 		int x,y;
+		String v;
 		salida=new String();	
 	}
 
@@ -318,8 +318,16 @@ void Programa():
 	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
 	    |  <JUMP> "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:JUMP ";}
 	    |  <LETGO> "(" x=num() ")" {world.putBalloons(x); salida = "Command: LetGo";}
-		) ";" 
-
+	    |  <TURN> "(" v=direction() ")" {world.turn(v); salida = "Command: Turn";}
+	    |  <DROP> "(" x=num() ")" {world.putChips(x); salida = "Command: Drop";}
+        | <GET> "(" x=num() ")" {world.pickChips(x); salida = "Command: Get"; }
+        | <GRAB> "(" x=num() ")" {world.grabBalloons(x); salida = "Command: Grab"; }
+	    |  <TURNTO> "(" v=orientation() ")" {world.turnto(v); salida = "Command: Turnto";}
+	    | <WALK> "(" x=num()[")" {world.moveForward(x, true);salida = "Command: Walk";}]
+	    ["," v=orientation() ")" { world.turnto(v);world.moveForward(x, true);salida = "Command: Walk";}
+	    | v=direction()")" { world.turn(v); world.moveForward(x, true);salida = "Command: Walk"; }]
+		) ";"
+	 
 		{
 		    try {
 	    			 Thread.sleep(900);
@@ -381,5 +389,28 @@ void Programa():
 			return total;
 		}
 	}
-
+	String direction() throws Error:
+    {
+        Token directionToken;
+        String directionValue = "";
+    }
+    {
+        directionToken = <DIRECTION>
+        {
+            directionValue = directionToken.image;
+            return directionValue;
+        }
+    }
+    String orientation() throws Error:
+    {
+        Token orientationToken;
+        String orientationValue = "";
+    }
+    {
+        orientationToken = <ORIENTATION>
+        {
+            orientationValue = orientationToken.image;
+            return orientationValue;
+        }
+    }
 	

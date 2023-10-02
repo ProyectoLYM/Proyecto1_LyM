@@ -71,39 +71,37 @@ public interface RobotConstants {
   /** RegularExpression Id. */
   int CONDITIONAL = 34;
   /** RegularExpression Id. */
-  int DIRECTION_TURN = 35;
+  int BALLOONS = 35;
   /** RegularExpression Id. */
-  int BALLOONS = 36;
+  int CHIPS = 36;
   /** RegularExpression Id. */
-  int CHIPS = 37;
+  int VARIABLE_NAME = 37;
   /** RegularExpression Id. */
-  int VARIABLE_NAME = 38;
+  int CONDITION = 38;
   /** RegularExpression Id. */
-  int CONDITION = 39;
+  int PERIOD = 39;
   /** RegularExpression Id. */
-  int PERIOD = 40;
+  int RPAREN = 40;
   /** RegularExpression Id. */
-  int RPAREN = 41;
+  int LPAREN = 41;
   /** RegularExpression Id. */
-  int LPAREN = 42;
+  int QUOTE = 42;
   /** RegularExpression Id. */
-  int QUOTE = 43;
+  int RSQUARE = 43;
   /** RegularExpression Id. */
-  int RSQUARE = 44;
+  int LSQUARE = 44;
   /** RegularExpression Id. */
-  int LSQUARE = 45;
+  int DOSPUNTOS = 45;
   /** RegularExpression Id. */
-  int DOSPUNTOS = 46;
+  int COMA = 46;
   /** RegularExpression Id. */
-  int COMA = 47;
+  int RCURLY = 47;
   /** RegularExpression Id. */
-  int RCURLY = 48;
+  int LCURLY = 48;
   /** RegularExpression Id. */
-  int LCURLY = 49;
+  int NUM = 49;
   /** RegularExpression Id. */
-  int NUM = 50;
-  /** RegularExpression Id. */
-  int DIGIT = 51;
+  int DIGIT = 50;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -145,7 +143,6 @@ public interface RobotConstants {
     "<DIRECTION>",
     "<ORIENTATION>",
     "<CONDITIONAL>",
-    "<DIRECTION_TURN>",
     "\"BALLOONS\"",
     "\"CHIPS\"",
     "<VARIABLE_NAME>",

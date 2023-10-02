@@ -636,4 +636,63 @@ public class RobotWorld {
 			this.facing = NORTH;
 		inform();
 	}
+	public void turn(String faces) {
+		if (faces.equals("right")) {
+			if(this.facing == NORTH)
+				this.facing = EAST;
+			else if(this.facing == SOUTH)
+				this.facing = WEST;
+			else if(this.facing == EAST)
+				this.facing = SOUTH;
+			else 
+				this.facing = NORTH;
+		}
+		else if (faces.equals("left")) {
+			if(this.facing == NORTH)
+				this.facing = WEST;
+			else if(this.facing == SOUTH)
+				this.facing = EAST;
+			else if(this.facing == EAST)
+				this.facing = NORTH;
+			else 
+				this.facing = SOUTH;
+		}
+		else
+			if(this.facing == NORTH)
+				this.facing = SOUTH;
+			else if(this.facing == SOUTH)
+				this.facing = NORTH;
+			else if(this.facing == EAST)
+				this.facing = WEST;
+			else 
+				this.facing = EAST;
+		inform();
+		
+	}
+
+	public void turnto(String faces) {
+		int mirando;
+		if (faces.equals("north")) {
+		    mirando = NORTH;
+		} else if (faces.equals("south")) {
+		    mirando = SOUTH;
+		} else if (faces.equals("east")) {
+		    mirando = EAST;
+		} else if (faces.equals("west")) {
+		    mirando = WEST; 
+		} else {
+			mirando = 4;
+		}
+		if (mirando < 4) {
+			this.facing = mirando;
+		
+				
+		}
+			
+			
+		
+			
+		
+	}
 }
+
