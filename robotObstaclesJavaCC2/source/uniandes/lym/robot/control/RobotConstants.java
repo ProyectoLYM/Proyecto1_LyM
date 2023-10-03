@@ -95,13 +95,15 @@ public interface RobotConstants {
   /** RegularExpression Id. */
   int COMA = 46;
   /** RegularExpression Id. */
-  int RCURLY = 47;
+  int PUNTOYCOMA = 47;
   /** RegularExpression Id. */
-  int LCURLY = 48;
+  int RCURLY = 48;
   /** RegularExpression Id. */
-  int NUM = 49;
+  int LCURLY = 49;
   /** RegularExpression Id. */
-  int DIGIT = 50;
+  int NUM = 50;
+  /** RegularExpression Id. */
+  int DIGIT = 51;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -155,11 +157,11 @@ public interface RobotConstants {
     "\"[\"",
     "\":\"",
     "\",\"",
+    "\";\"",
     "\"}\"",
     "\"{\"",
     "<NUM>",
     "<DIGIT>",
-    "\";\"",
   };
 
 }

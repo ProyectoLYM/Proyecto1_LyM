@@ -636,6 +636,7 @@ public class RobotWorld {
 			this.facing = NORTH;
 		inform();
 	}
+	
 	public void turn(String faces) {
 		if (faces.equals("right")) {
 			if(this.facing == NORTH)

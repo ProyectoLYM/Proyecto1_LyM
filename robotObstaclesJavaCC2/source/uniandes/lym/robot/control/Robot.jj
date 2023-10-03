@@ -13,7 +13,7 @@ Modificado por Silvia Takahashi
 options 
 {
   
-	LOOKAHEAD=2; 
+	LOOKAHEAD=3; 
 	IGNORE_CASE=true;
 	STATIC = false;
 	
@@ -31,6 +31,8 @@ import java.awt.Point;
 import java.io.*;
 import java.util.Vector;
 import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Map;
 
 @SuppressWarnings("serial")
 public class Robot 
@@ -45,6 +47,30 @@ public class Robot
 	}
 
 	String salida=new String();
+
+	private Map<String, Integer> variables = new HashMap<>();
+
+	public void guardarVariables(String nombreVariable) {
+	  if (variables.containsKey(nombreVariable)) {
+	     throw new RuntimeException("La variable ya existe: " + nombreVariable);
+	  }
+	  variables.put(nombreVariable, null);
+	}
+
+	public void asignarValor(String nombreVariable, int valor) {
+        if (!variables.containsKey(nombreVariable)) {
+            throw new RuntimeException("La variable no existe: " + nombreVariable);
+        }
+        variables.put(nombreVariable, valor);
+    }
+
+    public int getValor(String nombreVariable) {
+        Integer valor = variables.get(nombreVariable);
+        if (valor == null) {
+            throw new RuntimeException("La variable no tiene un valor asignado: " + nombreVariable);
+        }
+        return valor;
+    }
 }
 PARSER_END(Robot)
 
@@ -113,6 +139,7 @@ TOKEN: // Area de Operadores
 		| < LSQUARE : "[" >
 		| < DOSPUNTOS : ":" >
 		| < COMA : "," >
+		| < PUNTOYCOMA : ";" >
 		| < RCURLY : "}" >
         | < LCURLY : "{" >
 }  		
@@ -139,6 +166,16 @@ void creacionProceso():
 {}
 {
   <DEFPROC> <VARIABLE_NAME> <LPAREN> (<VARIABLE_NAME> (<COMA> <VARIABLE_NAME>))* <RPAREN>
+  <LCURLY>
+  comandoBlock()
+  <RCURLY> 
+}
+
+void comandoBlock():
+{}
+{
+   argumentList() ( <PUNTOYCOMA> argumentList() )*
+   [ <PUNTOYCOMA> ]
 }
 
 void comandoJump():
@@ -245,6 +282,24 @@ void comandoNop():
   <NOP> <LPAREN> <RPAREN> 
 }
 
+void comandoCan():
+{}
+{
+  <CAN> <LPAREN> argumentList() <RPAREN> 
+}
+
+void comandoFacing():
+{}
+{
+  <FACING> <LPAREN> <ORIENTATION> <RPAREN>  
+}
+
+void comandoNot():
+{}
+{
+  <NOT> (comandoFacing() | comandoCan())
+}  
+
 void condicionalIf():
 {}
 {
@@ -260,7 +315,7 @@ void condicionalWhile():
 void argumentList():
 {}
 {
-    comandoLeap()| comandoWalk() | comandoJump() | comandoTurn() | comandoTurnTo() | comandoDrop() | comandoGet() | comandoGrab() | comandoLetGo() |comandoNop() 
+    comandoLeap()| comandoWalk() | comandoJump() | comandoTurn() | comandoTurnTo() | comandoDrop() | comandoGet() | comandoGrab() | comandoLetGo() |comandoNop() | condicionalIf() | condicionalWhile() 
 }
 
 
@@ -284,6 +339,9 @@ void reglasdeSintaxis():
   comandoMove() |
   comandoRight() |
   comandoPut() |
+  comandoCan() |
+  comandoFacing() |
+  comandoNot() |
   pop() |
   hop() |
   go() |
@@ -310,23 +368,22 @@ void Programa():
 	{
 		(		  (
 		   <RIGHT> "(" ")" {world.turnRight();salida = "Command: Turnright";}
-		| 	<MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
-		| 	<HOP>  "(" x=num() ")" {world.moveForward(x,true);salida = "Command:Jumpforward ";}
-		| 	<GO>  "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:GO ";}  
-		|  <PUT> "("  put() ")"					  			
-		|  <PICK> "(" get()  ")"	
-	    |  < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
-	    |  <JUMP> "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:JUMP ";}
-	    |  <LETGO> "(" x=num() ")" {world.putBalloons(x); salida = "Command: LetGo";}
-	    |  <TURN> "(" v=direction() ")" {world.turn(v); salida = "Command: Turn";}
-	    |  <DROP> "(" x=num() ")" {world.putChips(x); salida = "Command: Drop";}
+		| <MOV>  "(" x=num() ")" {world.moveForward(x,false);salida = "Command: Moveforward ";}  
+		| <HOP>  "(" x=num() ")" {world.moveForward(x,true);salida = "Command:Jumpforward ";}
+		| <GO>  "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:GO ";}  
+		| <PUT> "("  put() ")"					  			
+		| <PICK> "(" get()  ")"	
+	    | < POP > "(" x=num() ")" {world.popBalloons(x); salida = "Comando:  Pop";}
+	    | <JUMP> "(" x=num() "," y=num()")" {world.setPostion(x,y);salida = "Command:JUMP ";}
+	    | <LETGO> "(" x=num() ")" {world.putBalloons(x); salida = "Command: LetGo";}
+	    | <TURN> "(" v=direction() ")" {world.turn(v); salida = "Command: Turn";}
+	    | <DROP> "(" x=num() ")" {world.putChips(x); salida = "Command: Drop";}
         | <GET> "(" x=num() ")" {world.pickChips(x); salida = "Command: Get"; }
         | <GRAB> "(" x=num() ")" {world.grabBalloons(x); salida = "Command: Grab"; }
-	    |  <TURNTO> "(" v=orientation() ")" {world.turnto(v); salida = "Command: Turnto";}
-	    | <WALK> "(" x=num()[")" {world.moveForward(x, false);salida = "Command: Walk";}]
-	    ["," v=orientation() ")" { world.turnto(v);world.moveForward(x, false);salida = "Command: Walk";}
-	    | 
-	    "," v=direction()")" { world.turn(v); world.moveForward(x, false);salida = "Command: Walk"; }]
+	    | <TURNTO> "(" v=orientation() ")" {world.turnto(v); salida = "Command: Turnto";}   
+        | logicaWalk()
+        | logicaLeap()
+        | logicaDefvar() 
 		) ";"
 	 
 		{
@@ -364,6 +421,67 @@ void Programa():
 	}
 
 	
+    void logicaWalk():
+	{
+	  int x;
+	  String v;
+	  salida= new String();	
+	} 
+	{
+	  <WALK> "(" x=num() [")" {
+	    world.moveForward(x, false);
+	    salida = "Command: Walk"; }]
+	    ["," v=orientation() ")" {
+	      world.turnto(v);
+	      world.moveForward(x, false);
+	      salida = "Command: Walk";}
+	      | 
+	      "," v=direction() ")" {
+	        world.turn(v);
+	        world.moveForward(x, false);
+	        salida = "Command: Walk"; }]
+	}
+
+	void logicaLeap():
+	{
+	  int x;
+	  String v;
+	  salida= new String();	
+	} 
+	{
+	  <LEAP> "(" x=num() [")" {
+	    world.moveForward(x, true);
+	    salida = "Command: Leap"; }]
+	    ["," v=orientation() ")" {
+	      world.turnto(v);
+	      world.moveForward(x, true);
+	      salida = "Command: Leap";}
+	      | 
+	      "," v=direction() ")" {
+	        world.turn(v);
+	        world.moveForward(x, true);
+	        salida = "Command: Walk"; }]
+	}
+
+	void logicaDefvar():
+	{
+	  int x;
+	  String v;
+	  salida = new String();
+	}
+	{ 
+	  <DEFVAR> x=num() v=variable_name() {
+	    guardarVariables(v);
+	    asignarValor(v,x);
+	    System.out.println("Variable: " + v + ", Valor: " + x); 
+	    salida = "Command: DefVar"; }
+	}
+	 	
+   
+    
+	    
+
+	
 	
 
 	/**
@@ -390,6 +508,8 @@ void Programa():
 			return total;
 		}
 	}
+
+	
 	String direction() throws Error:
     {
         Token directionToken;
@@ -402,6 +522,7 @@ void Programa():
             return directionValue;
         }
     }
+    
     String orientation() throws Error:
     {
         Token orientationToken;
@@ -412,6 +533,19 @@ void Programa():
         {
             orientationValue = orientationToken.image;
             return orientationValue;
+        }
+    }
+
+    String variable_name() throws Error:
+    {
+        Token variable_nameToken;
+        String variable_nameValue = "";
+    }
+    {
+        variable_nameToken = <VARIABLE_NAME>
+        {
+            variable_nameValue = variable_nameToken.image;
+            return variable_nameValue;
         }
     }
 	
