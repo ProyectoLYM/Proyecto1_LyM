@@ -219,6 +219,9 @@ private int jjStopAtPos(int pos, int kind)
 private int jjMoveStringLiteralDfa0_0(){
    switch(curChar)
    {
+      case 32:
+         jjmatchedKind = 1;
+         return jjMoveStringLiteralDfa1_0(0x30000000000000L);
       case 34:
          return jjStopAtPos(0, 42);
       case 40:
@@ -332,6 +335,12 @@ private int jjMoveStringLiteralDfa1_0(long active0){
       case 85:
       case 117:
          return jjMoveStringLiteralDfa2_0(active0, 0x19080L);
+      case 123:
+         return jjMoveStringLiteralDfa2_0(active0, 0x10000000000000L);
+      case 125:
+         if ((active0 & 0x20000000000000L) != 0L)
+            return jjStopAtPos(1, 53);
+         break;
       default :
          break;
    }
@@ -347,6 +356,10 @@ private int jjMoveStringLiteralDfa2_0(long old0, long active0){
    }
    switch(curChar)
    {
+      case 32:
+         if ((active0 & 0x10000000000000L) != 0L)
+            return jjStopAtPos(2, 52);
+         break;
       case 65:
       case 97:
          return jjMoveStringLiteralDfa3_0(active0, 0x84000L);
@@ -1721,7 +1734,8 @@ public static final String[] jjstrLiteralImages = {
 "", null, null, null, null, null, null, null, null, null, null, null, null, 
 null, null, null, null, null, null, null, null, null, null, null, null, null, null, 
 null, null, null, null, null, null, null, null, null, null, null, null, "\56", 
-"\51", "\50", "\42", "\135", "\133", "\72", "\54", "\73", "\175", "\173", null, null, };
+"\51", "\50", "\42", "\135", "\133", "\72", "\54", "\73", "\175", "\173", null, null, 
+"\40\173\40", "\40\175", };
 protected Token jjFillToken()
 {
    final Token t;
@@ -1778,7 +1792,7 @@ public Token getNextToken()
    }
 
    try { input_stream.backup(0);
-      while (curChar <= 32 && (0x100002600L & (1L << curChar)) != 0L)
+      while (curChar <= 13 && (0x2600L & (1L << curChar)) != 0L)
          curChar = input_stream.BeginToken();
    }
    catch (java.io.IOException e1) { continue EOFLoop; }
@@ -1938,10 +1952,10 @@ public static final String[] lexStateNames = {
 public static final int[] jjnewLexState = {
    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
    -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 
-   -1, -1, 
+   -1, -1, -1, -1, 
 };
 static final long[] jjtoToken = {
-   0x7ffffffffffe1L, 
+   0x37ffffffffffe1L, 
 };
 static final long[] jjtoSkip = {
    0x1eL, 

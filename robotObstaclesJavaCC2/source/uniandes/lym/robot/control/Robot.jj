@@ -18,7 +18,7 @@ options
 	STATIC = false;
 	
 }
-   
+ 
 
 PARSER_BEGIN(Robot)
 
@@ -181,7 +181,7 @@ void comandoBlock():
 void comandoJump():
 {}
 {
-  <JUMP> <LPAREN> <NUM> <NUM> <RPAREN>
+  <JUMP> <LPAREN> <NUM> <COMA> <NUM> <RPAREN>
 }
 
 void comandoMove():
@@ -380,7 +380,9 @@ void Programa():
 	    | <DROP> "(" x=num() ")" {world.putChips(x); salida = "Command: Drop";}
         | <GET> "(" x=num() ")" {world.pickChips(x); salida = "Command: Get"; }
         | <GRAB> "(" x=num() ")" {world.grabBalloons(x); salida = "Command: Grab"; }
-	    | <TURNTO> "(" v=orientation() ")" {world.turnto(v); salida = "Command: Turnto";}   
+	    | <TURNTO> "(" v=orientation() ")" {world.turnto(v); salida = "Command: Turnto";}
+	    | <DEFPROC> <VARIABLE_NAME> "(" (<VARIABLE_NAME> ("," <VARIABLE_NAME>))* ")"
+	    | <IF> <CONDITION> "(" argumentList() ")" " { " argumentList() " }"
         | logicaWalk()
         | logicaLeap()
         | logicaDefvar() 
@@ -463,22 +465,24 @@ void Programa():
 	        salida = "Command: Walk"; }]
 	}
 
+
 	void logicaDefvar():
 	{
 	  int x;
 	  String v;
 	  salida = new String();
 	}
-	{ 
-	  <DEFVAR> x=num() v=variable_name() {
+	{
+	  <DEFVAR> v=variable_name() x=num() {
+	    System.out.println("entra"); 
 	    guardarVariables(v);
 	    asignarValor(v,x);
 	    System.out.println("Variable: " + v + ", Valor: " + x); 
 	    salida = "Command: DefVar"; }
 	}
-	 	
-   
-    
+
+	
+
 	    
 
 	

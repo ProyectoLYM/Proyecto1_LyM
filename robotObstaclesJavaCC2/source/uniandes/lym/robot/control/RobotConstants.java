@@ -162,6 +162,8 @@ public interface RobotConstants {
     "\"{\"",
     "<NUM>",
     "<DIGIT>",
+    "\" { \"",
+    "\" }\"",
   };
 
 }
